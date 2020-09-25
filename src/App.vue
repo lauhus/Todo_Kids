@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <header>
-      <span>Vue.js PWA</span>
+      <img src="./assets/logo_ToDo.png" alt="Logo To Do , Kids">
+      <h1 class="name_appli"> To Do , Kids </h1>
     </header>
     <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
       <router-view></router-view>
     </main>
   </div>
@@ -17,38 +17,22 @@ export default {
 </script>
 
 <style>
-body {
-  margin: 0;
+body 
+{
+font-family:trebuchet, helvetica, sans-serif;
 }
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+header
+{
+display: flex;
+align-items: flex-start;
 }
-
-main {
-  text-align: center;
-  margin-top: 40px;
+img
+{
+  height: 5%;
+  width: 5%;
 }
-
-header {
-  margin: 0;
-  height: 56px;
-  padding: 0 16px 0 24px;
-  background-color: #35495E;
-  color: #ffffff;
-}
-
-header span {
-  display: block;
-  position: relative;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: .02em;
-  font-weight: 400;
-  box-sizing: border-box;
-  padding-top: 16px;
+.name_appli
+{
+  margin-left: 40%;
 }
 </style>
