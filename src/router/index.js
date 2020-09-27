@@ -8,6 +8,7 @@ import AddEvent from '@/components/AddEvent'
 import AddTodo from '@/components/AddTodo'
 import AddMessage from '@/components/AddMessage'
 import AccountCreation from '@/components/AccountCreation'
+import CGU from '@/components/CGU'
 
 Vue.use(Router)
 
@@ -16,7 +17,8 @@ export default new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      props: true
     },
     {
       path: '/Home',
@@ -58,6 +60,11 @@ export default new Router({
       path: '/CreationCompte',
       name: 'AccountCreation',
       component: AccountCreation
+    },
+    {
+      path: '/CGU',
+      name: 'CGU',
+      component: CGU
     }
   ]
 })

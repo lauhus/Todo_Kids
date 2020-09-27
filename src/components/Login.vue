@@ -1,6 +1,9 @@
 <template>
   <div>
     <div>
+      <div v-if="message">
+        <p> {{message}} </p>
+      </div>
       <form class="login_form">
         <label>Identifiant : <br>
           <input v-model="Email" type="text" name="Email" placeholder="email@mail.fr">
@@ -12,7 +15,7 @@
         <br>
         <button v-on:click="checkForm" type="button" name="submit" class="btn btn-primary">Connectez vous </button>
       </form>
-      <div>
+      <div class="link_registration">
         <p> Pas encore de compte ? Créez-en un ! </p>
         <router-link :to="{name:'AccountCreation'}"> Inscrivez-vous </router-link>
       </div>
@@ -23,6 +26,8 @@
 <script>
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import VueSession from 'vue-session'
+Vue.use(VueSession)
 Vue.use(VueResource)
 
 export default {
@@ -34,6 +39,11 @@ export default {
       Token: '',
       User: '',
       Users: ''
+    }
+  },
+  props: {
+    message: {
+      required: false
     }
   },
   http: {
@@ -59,7 +69,9 @@ export default {
                 }
               })
                 .then(response => {
+                  this.$session.start()
                   this.User = response.data['hydra:member'][0]
+                  this.$session.set(['token', this.Token.body['token']], ['user', this.User])
                   this.$router.push({
                     name: 'Home',
                     params: {
@@ -88,6 +100,14 @@ body
 font-family:trebuchet, helvetica, sans-serif;
 }
 .login_form
+{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 5%;
+}
+.link_registration
 {
   display: flex;
   flex-direction: column;

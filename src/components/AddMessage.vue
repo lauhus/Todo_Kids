@@ -8,7 +8,7 @@
           Pour qui?
           <div v-for="User in Users" :key="User.id">
             <label>{{User.firstname}}
-              <li> <button type="button" v-on:click="ValueOfButton(User.id)"> {{User.firstname}} </button>  </li>
+              <li> <button type="button" class="btn btn-info" v-on:click="ValueOfButton(User.id)"> {{User.firstname}} </button>  </li>
             </label>
           </div>
             <label> Message ? :

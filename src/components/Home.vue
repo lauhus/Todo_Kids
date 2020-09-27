@@ -4,14 +4,15 @@
       <header class="header">
         <h3 class="fn_user"> {{user.firstname}} </h3>
         <img class=avatar :src="getAvatar(user.avatar)" alt="Avatar">
+        <button type="button" class="btn btn-warning" v-on:click="logOut()"> Se déconnecter </button>
       </header>
       {{user}}
       <div class="show">
         <div class="todo">
           <h4>To Do </h4>
           <div v-if="user.roles[0]=['ROLE_PARENT'] || ['ROLE_PROCHE']">
-            <button type="button" v-on:click="ShowTodoFamily()">Tous les Todos familiale</button>
-            <button type="button" v-on:click="AddTodo()">Ajouter des Todos</button>
+            <button type="button" class="btn btn-info" v-on:click="ShowTodoFamily()">Tous les Todos familiale</button>
+            <button type="button" class="btn btn-info" v-on:click="AddTodo()">Ajouter des Todos</button>
           </div>
             <div v-for="Todo in user.Todo" :key="Todo.id">
               <div v-if="Todo.checked === false">
@@ -30,19 +31,19 @@
             </div>
         </div>
         <div class="message">
-          <button type="button" v-on:click="AddMessage()">Laisser un message :</button>
+          <button type="button" class="btn btn-info" v-on:click="AddMessage()">Laisser un message :</button>
           <h3> Vous avez des Post-it : </h3>
             <div v-for="Message in user.Message" :key="Message.id">
               <div class="header_postit"> 
-                <button type="button" v-on:click="AlertDeleteMessage()"> X </button></div>
+                <button type="button" class="btn btn-info" v-on:click="AlertDeleteMessage()"> X </button></div>
               {{Message.message}} 
               {{Message.author}}
             </div>
         </div>
         <div class="event">
           <div v-if="user.roles=['ROLE_PARENT','ROLE_USER'] || ['ROLE_PROCHE','ROLE_USER']">
-            <button type="button" v-on:click="ShowEventFamily()">Tous les événements à venir</button>
-            <button type="button" v-on:click="AddEvent()">Ajouter un événement</button>
+            <button type="button" class="btn btn-info" v-on:click="ShowEventFamily()">Tous les événements à venir</button>
+            <button type="button" class="btn btn-info" v-on:click="AddEvent()">Ajouter un événement</button>
           </div>
           <h4>Evenement </h4>
             <div v-for="Event in user.Event" :key="Event.id">
@@ -216,6 +217,15 @@ export default {
             }
           })
         })
+    },
+    logOut (event) {
+      this.$session.destroy()
+      this.$router.push({
+        name: 'login',
+        params: {
+          message: 'Vous avez bien été déconnecté.'
+        }
+      })
     }
   }
 }

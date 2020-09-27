@@ -7,6 +7,9 @@
     <main>
       <router-view></router-view>
     </main>
+    <footer>
+      <router-link :to="{name:'CGU'}"> Conditions générales d'utilisations </router-link>
+    </footer>
   </div>
 </template>
 
@@ -34,5 +37,12 @@ img
 .name_appli
 {
   margin-left: 40%;
+}
+footer
+{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  align-items: center;
 }
 </style>
