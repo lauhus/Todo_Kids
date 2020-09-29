@@ -30,11 +30,6 @@ Vue.use(VueFilterDateFormat)
 Vue.use(VueResource)
 export default {
   name: 'Events',
-  data () {
-    return {
-      Users: ''
-    }
-  },
   props: {
     user: {
       required: true

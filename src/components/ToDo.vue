@@ -25,9 +25,6 @@
 <script>
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import VueFilterDateFormat from 'vue-filter-date-format'
-// import moment from 'moment'
-Vue.use(VueFilterDateFormat)
 Vue.use(VueResource)
 export default {
   name: 'ToDo',

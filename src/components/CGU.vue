@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="cgu">
     <header>
         <h1> Conditions générales d'utilisation </h1>
     </header>
@@ -57,7 +58,7 @@ L’Utilisateur pourra désactiver ces cookies par l’intermédiaire des param�
 <h3>ARTICLE 8 : Droit applicable et juridiction compétente</h3>
 <p>La législation française s'applique au présent contrat. En cas d'absence de résolution amiable d'un litige né entre les parties, les tribunaux français seront seuls compétents pour en connaître.</p>
 <p>Pour toute question relative à l’application des présentes CGU, vous pouvez joindre l’éditeur aux coordonnées inscrites à l’ARTICLE 1.</p>
-  
+    </div>
   <router-link :to="{name:'login'}"> Retour à l'accueil </router-link>
   </div>
 </template>
@@ -71,7 +72,16 @@ export default {
 <style>
 body 
 {
-font-family:trebuchet, helvetica, sans-serif;
+  font-family:trebuchet, helvetica, sans-serif;
+}
+.cgu{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-right: 3%;
+  margin-left: 3%;
+  margin-top: 3%;
 }
 header
 {
