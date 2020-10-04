@@ -5,8 +5,10 @@
       <h1 class="name_appli"> To Do , Kids </h1>
     </header>
     <div>
-      <div v-if="message">
-        <p> {{message}} </p>
+      <div v-if="message_alert">
+        <div class="message_alert alert alert-success" role="alert">
+        <p> {{message_alert}} </p>
+        </div>
       </div>
       <form class="login_form">
         <label>Identifiant : <br>
@@ -44,7 +46,7 @@ export default {
     }
   },
   props: {
-    message: {
+    message_alert: {
       required: false
     }
   },
@@ -99,6 +101,14 @@ export default {
 body
 {
 font-family:trebuchet, helvetica, sans-serif;
+}
+.message_alert
+{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 5%;
 }
 .login_form
 {

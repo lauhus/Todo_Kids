@@ -1,9 +1,13 @@
 <template>
     <div>
-        <header> Vos proches ont déjà créer une famille ? Demander leurs de vous y ajouter ! <br>
-        Ce n'est pas le cas ? Vous et vos proches venez d'arriver ? Bienvenue parmis nous !
-        </header>
-        {{family.body}}
+      <div class="header2">
+        <img src="../assets/logo_ToDo.png" alt="Logo To Do , Kids">
+        <h1 class="name_appli"> To Do , Kids </h1>
+        </div>
+      <div class="header1">
+        <p>Vos proches ont déjà créer une famille ? Demander leurs de vous y ajouter ! <br>
+        Ce n'est pas le cas ? Vous et vos proches venez d'arriver ? Bienvenue parmis nous ! </p>
+        </div>
         <div class="formAddFamilyandUser">
             <form>
                 <label>Choissisez un pseudo pour votre famille : 
@@ -34,7 +38,6 @@
 <script>
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-
 Vue.use(VueResource)
 
 export default {
@@ -53,8 +56,7 @@ export default {
       roles: ['ROLE_USER', 'ROLE_PARENT'],
       user: '',
       validation: '',
-      token: '',
-      passwordHash: ''
+      token: ''
     }
   },
   http: {
@@ -95,12 +97,11 @@ export default {
         })
     },
     addUser () {
-      this.passwordHash = this.password
       this.$http.post('users', {
         'Content-Type': 'application/json',
         'family': '/families/' + this.family.body.id,
         'roles': this.roles,
-        'password': this.passwordHash,
+        'plainPassword': this.password,
         'email': this.email,
         'firstname': this.firstname,
         'avatar': this.avatar,
@@ -147,17 +148,41 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.avatar
+{
+  display: flex;
+  flex-direction: row;
+  height: 30%;
+  width: 30%;
+}
 body
 {
 font-family:trebuchet, helvetica, sans-serif;
 }
-.formAddFamilyandUser{
-    display: flex;
-    flex-direction: column;
+.header2
+{
+  display: flex;
+  flex-direction: row;
 }
-.avatar{
-    display: flex;
-    flex-direction:column;
-    flex-wrap:wrap;
+.header1
+{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 5%;
+}
+.formAddFamilyandUser
+{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 5%;
+}
+.logo
+{
+  height: 15%;
+  width: 15%;
 }
 </style>

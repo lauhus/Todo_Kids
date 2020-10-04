@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="!user">
+      {{returnToConnect()}}
+    </div>
+    <div v-else>
     <div class="header1">
       <router-link :to="{name:'Home',params:{user:this.user,token:this.token}}"><img src="../assets/logo_ToDo.png" class="logo" alt="Logo To Do , Kids"> </router-link>
       <h1 class="name_appli"> To Do, Kids </h1>
@@ -15,9 +19,7 @@
         <label>
           Pour qui?
           <div v-for="User in Users" :key="User.id">
-            <label>{{User.firstname}}
-              <li> <button type="button" class="btn btn-info" v-on:click="ValueOfButton(User.id)"> {{User.firstname}} </button>  </li>
-            </label>
+              <button type="button" class="btn btn-primary" v-on:click="ValueOfButton(User.id)"> {{User.firstname}} </button>
           </div>
         </label>
       <label> Quoi ? :
@@ -32,6 +34,7 @@
         <input type="textarea" name="message_event" v-model="message_event"></label>
         <button type="button" v-on:click="AddEvent" class="btn btn-primary"> Ajouter l'événement </button>
       </form>
+    </div>
     </div>
 </template>
 
@@ -108,6 +111,22 @@ export default {
             alert('Erreur dans le formulaire , veuillez recommencer')
           }
         })
+    },
+    logOut (event) {
+      this.$router.push({
+        name: 'Login',
+        params: {
+          message_alert: 'Vous avez bien été déconnecté.'
+        }
+      })
+    },
+    returnToConnect () {
+      this.$router.push({
+        name: 'Login',
+        params: {
+          message_alert: "Veuillez vous connecter pour accéder à l'application"
+        }
+      })
     }
   }
 }
@@ -115,6 +134,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+body
+{
+font-family:trebuchet, helvetica, sans-serif;
+}
 header{
   display: flex;
   flex-direction: column;
@@ -155,6 +178,52 @@ header{
 .fn_user{
   margin-top: 1%;
   margin-left: 2%;
+}
+.AddEvent
+{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  margin-top: 5%;
+}
+button
+{
+  margin-top: 2%;
+}
+@media screen and (max-width: 1300px) {
+  .logo
+  {
+    height: 60%;
+    width: 40%;
+  }
+  .name_appli
+  {
+    margin-left: 0%;
+  }
+  .avatar
+  {
+  height: 10%;
+  width: 10%;
+  }
+  .header1{
+    display: flex;
+    flex-direction: row;
+  }
+  .header2
+  {
+  padding: 0%;
+  }
+  .logout
+  {
+  margin-left: 20%;
+  margin-top: 1%;
+  }
+  .fn_user
+  {
+  margin-top: 1%;
+  margin-left: 2%;
+  }
 }
 
 </style>

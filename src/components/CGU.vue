@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="header1">
+      <img src="../assets/logo_ToDo.png" class="logo" alt="Logo To Do , Kids">
+      <h1 class="name_appli"> To Do, Kids </h1>
+    </div>
+      <router-link :to="{name:'Login'}"> Retour à l'accueil </router-link>
     <div class="cgu">
     <header>
         <h1> Conditions générales d'utilisation </h1>
@@ -59,7 +64,6 @@ L’Utilisateur pourra désactiver ces cookies par l’intermédiaire des param�
 <p>La législation française s'applique au présent contrat. En cas d'absence de résolution amiable d'un litige né entre les parties, les tribunaux français seront seuls compétents pour en connaître.</p>
 <p>Pour toute question relative à l’application des présentes CGU, vous pouvez joindre l’éditeur aux coordonnées inscrites à l’ARTICLE 1.</p>
     </div>
-  <router-link :to="{name:'login'}"> Retour à l'accueil </router-link>
   </div>
 </template>
 
@@ -87,6 +91,17 @@ header
 {
 display: flex;
 align-items: flex-start;
+}
+.name_appli
+{
+  display: flex;
+  align-items: flex-start;
+  margin-left: 42%;
+}
+img
+{
+  height: 10%;
+  width: 10%;
 }
 
 </style>

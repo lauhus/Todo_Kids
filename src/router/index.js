@@ -9,6 +9,7 @@ import AddTodo from '@/components/AddTodo'
 import AddMessage from '@/components/AddMessage'
 import AccountCreation from '@/components/AccountCreation'
 import CGU from '@/components/CGU'
+import AddUserInFamily from '@/components/AddUserInFamily'
 
 Vue.use(Router)
 
@@ -65,6 +66,12 @@ export default new Router({
       path: '/CGU',
       name: 'CGU',
       component: CGU
+    },
+    {
+      path: '/AjoutMembreFamille',
+      name: 'AddUserInFamily',
+      component: AddUserInFamily,
+      props: true
     }
   ]
 })

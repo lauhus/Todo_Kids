@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="!user">
+      {{returnToConnect()}}
+    </div>
+    <div v-else>
     <div class="header1">
       <router-link :to="{name:'Home',params:{user:this.user,token:this.token}}"><img src="../assets/logo_ToDo.png" class="logo" alt="Logo To Do , Kids"> </router-link>
       <h1 class="name_appli"> To Do, Kids </h1>
@@ -7,6 +11,9 @@
     <div class="header2">
       <img class="avatar" :src="getAvatar(user.avatar)" alt="Avatar">
       <h3 class="fn_user"> {{user.firstname}} </h3>
+      <div class="AddUser">
+      <button type="button" class="btn btn-outline-info" v-on:click="AddUserInFamily()">Ajouter un utilisateur</button>
+      </div>
       <div class="logout">
         <button type="button" class="btn btn-outline-danger" v-on:click="logOut()"> Se déconnecter </button>
       </div>
@@ -66,6 +73,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 </template>
 
@@ -244,9 +252,26 @@ export default {
     },
     logOut (event) {
       this.$router.push({
-        name: 'login',
+        name: 'Login',
         params: {
-          message: 'Vous avez bien été déconnecté.'
+          message_alert: 'Vous avez bien été déconnecté.'
+        }
+      })
+    },
+    returnToConnect () {
+      this.$router.push({
+        name: 'Login',
+        params: {
+          message_alert: "Veuillez vous connecter pour accéder à l'application"
+        }
+      })
+    },
+    AddUserInFamily () {
+      this.$router.push({
+        name: 'AddUserInFamily',
+        params: {
+          user: this.user,
+          token: this.token
         }
       })
     }
@@ -256,6 +281,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+body
+{
+font-family:trebuchet, helvetica, sans-serif;
+}
 .show
 {
   display: flex;
@@ -316,7 +345,7 @@ header{
 {
   display: flex;
   align-items: flex-start;
-  margin-left: 22%;
+  margin-left: 15%;
 }
 .avatar{
   height: 5%;
@@ -337,11 +366,58 @@ header{
   padding: 1%;
 }
 .logout{
-  margin-left: 80%;
+  margin-left: 3%;
+  margin-top: 1%;
+}
+.AddUser{
+  margin-left: 70%;
   margin-top: 1%;
 }
 .fn_user{
   margin-top: 1%;
   margin-left: 2%;
+}
+
+@media screen and (max-width: 1300px) {
+  .show
+  {
+    flex-direction: column;
+  }
+  .logo
+  {
+    height: 60%;
+    width: 40%;
+  }
+  .name_appli
+  {
+    margin-left: 0%;
+  }
+  .avatar
+  {
+  height: 10%;
+  width: 10%;
+  }
+  .header1{
+    display: flex;
+    flex-direction: row;
+  }
+  .header2
+  {
+  padding: 0%;
+  }
+  .logout
+  {
+  margin-left: 1%;
+  margin-top: 1%;
+  }
+  .AddUser{
+  margin-left: 15%;
+  margin-top: 1%;
+}
+  .fn_user
+  {
+  margin-top: 1%;
+  margin-left: 2%;
+  }
 }
 </style>
