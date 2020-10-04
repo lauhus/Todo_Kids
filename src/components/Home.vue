@@ -1,64 +1,72 @@
 <template>
   <div>
-    <div>
-      <header class="header">
-        <h3 class="fn_user"> {{user.firstname}} </h3>
-        <img class=avatar :src="getAvatar(user.avatar)" alt="Avatar">
-        <button type="button" class="btn btn-warning" v-on:click="logOut()"> Se déconnecter </button>
-      </header>
-      {{user}}
+    <div class="header1">
+      <router-link :to="{name:'Home',params:{user:this.user,token:this.token}}"><img src="../assets/logo_ToDo.png" class="logo" alt="Logo To Do , Kids"> </router-link>
+      <h1 class="name_appli"> To Do, Kids </h1>
+    </div>
+    <div class="header2">
+      <img class="avatar" :src="getAvatar(user.avatar)" alt="Avatar">
+      <h3 class="fn_user"> {{user.firstname}} </h3>
+      <div class="logout">
+        <button type="button" class="btn btn-outline-danger" v-on:click="logOut()"> Se déconnecter </button>
+      </div>
+    </div>
       <div class="show">
-        <div class="todo">
+        <div class="todos">
+          <h5> Pour le {{todaysDate}} : </h5>
           <h4>To Do </h4>
-          <div v-if="user.roles[0]=['ROLE_PARENT'] || ['ROLE_PROCHE']">
-            <button type="button" class="btn btn-info" v-on:click="ShowTodoFamily()">Tous les Todos familiale</button>
-            <button type="button" class="btn btn-info" v-on:click="AddTodo()">Ajouter des Todos</button>
+          <div v-if="user.roles = ['ROLE_PARENT'] || ['ROLE_PROCHE']">
+            <button type="button" class="btn btn-success" v-on:click="ShowTodoFamily()">Tous les todos familiale</button>
+            <button type="button" class="btn btn-success" v-on:click="AddTodo()">Ajouter des todos</button>
           </div>
             <div v-for="Todo in user.Todo" :key="Todo.id">
+            <div class="todo">
+              <div v-if="getFormatDate(Todo.date_todo) === todaysDate">
               <div v-if="Todo.checked === false">
                 <label>{{Todo.nature_todo}}
-                  <input type="checkbox" v-model="Checked" v-on:click="ChangeTrueOrFalse(Todo.id)" value="false" name="Todo.nature_todo">
+                  <input type="checkbox" v-on:click="ChangeTrueOrFalse(Todo.id,false)" id=Todo.id>
                 </label>
               </div>
               <div v-else>
                 <label>{{Todo.nature_todo}}
-                  <input type="checkbox" v-model="Checked" v-on:click="ChangeTrueOrFalse(Todo.id)" value="true" name="Todo.nature_todo" checked>
+                  <input type="checkbox"  v-on:click="ChangeTrueOrFalse(Todo.id,true)" id=Todo.id  checked>
                 </label>
               </div>
-              <div v-if="Todo.message_todo" class="message">
+              <div v-if="Todo.message_todo">
                 {{Todo.message_todo}}
               </div>
             </div>
+            </div>
+          </div>
         </div>
-        <div class="message">
-          <button type="button" class="btn btn-info" v-on:click="AddMessage()">Laisser un message :</button>
+        <div class="messages">
+          <button type="button" class="btn btn-warning" v-on:click="AddMessage()">Laisser un message :</button>
           <h3> Vous avez des Post-it : </h3>
             <div v-for="Message in user.Message" :key="Message.id">
-              <div class="header_postit"> 
-                <button type="button" class="btn btn-info" v-on:click="AlertDeleteMessage()"> X </button></div>
-              {{Message.message}} 
-              {{Message.author}}
+              <div class="message"> 
+              {{Message.message}} -{{Message.author}} <button type="button" class="btn btn-outline-secondary" v-on:click="DeleteMessage(Message.id)"> X </button></div>
             </div>
         </div>
-        <div class="event">
-          <div v-if="user.roles=['ROLE_PARENT','ROLE_USER'] || ['ROLE_PROCHE','ROLE_USER']">
-            <button type="button" class="btn btn-info" v-on:click="ShowEventFamily()">Tous les événements à venir</button>
-            <button type="button" class="btn btn-info" v-on:click="AddEvent()">Ajouter un événement</button>
-          </div>
+        <div class="events">
           <h4>Evenement </h4>
+          <div v-if="user.roles=['ROLE_PARENT','ROLE_USER'] || ['ROLE_PROCHE','ROLE_USER']">
+            <button type="button" class="btn btn-primary" v-on:click="ShowEventFamily()">Tous les événements à venir</button>
+            <button type="button" class="btn btn-primary" v-on:click="AddEvent()">Ajouter un événement</button>
+          </div>
             <div v-for="Event in user.Event" :key="Event.id">
+              <div class="event">
               <h5>{{Event.nature_event}}</h5>
               <p> Date : {{getFormatDate(Event.date_event)}} </p>
               <p> Heure début : {{getFormatTime(Event.start_event)}} </p>
               <p> Heure fin : {{getFormatTime(Event.end_event)}} </p>
-                <div v-if="Event.message_event" class="message">
+                <div v-if="Event.message_event">
                   {{Event.message_event}}
               </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -72,8 +80,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      Checked: '',
-      Users: ''
+      Users: '',
+      todaysDate: this.getFormatDate(new Date())
     }
   },
   props: {
@@ -98,9 +106,8 @@ export default {
     getFormatTime (time) {
       return moment(String(time)).format('HH:mm')
     },
-    ChangeTrueOrFalse (id) {
-      let Checked = this.Checked
-      console.log(this.token)
+    ChangeTrueOrFalse (id, bool) {
+      let Checked = bool
       if (Checked === true) {
         this.$http.put('todos/' + id, {
           Authorization: 'Bearer ' + this.token,
@@ -124,7 +131,6 @@ export default {
       })
         .then(response => {
           this.Users = response.data['hydra:member']
-          console.log(this.Users)
           this.$router.push({
             name: 'Events',
             params: {
@@ -144,7 +150,6 @@ export default {
       })
         .then(response => {
           this.Users = response.data['hydra:member']
-          console.log(this.Users)
           this.$router.push({
             name: 'AddEvent',
             params: {
@@ -164,7 +169,6 @@ export default {
       })
         .then(response => {
           this.Users = response.data['hydra:member']
-          console.log(this.Users)
           this.$router.push({
             name: 'ToDo',
             params: {
@@ -184,7 +188,6 @@ export default {
       })
         .then(response => {
           this.Users = response.data['hydra:member']
-          console.log(this.Users)
           this.$router.push({
             name: 'AddTodo',
             params: {
@@ -195,8 +198,30 @@ export default {
           })
         })
     },
-    AlertDeleteMessage (event) {
-      alert('Attention vous allez supprimer définitivement ce message. Etes-vous sur ?')
+    DeleteMessage (id) {
+      this.$http.delete('messages/' + id, {
+        headers: {
+          Authorization: 'Bearer ' + this.token,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          this.validation = response
+          if (this.validation.status === 204) {
+            alert('Message supprimé')
+            this.$http.get('users/' + this.user.id, {
+              headers: {
+                Authorization: 'Bearer ' + this.token,
+                'Content-Type': 'application/json'
+              }
+            })
+              .then(response => {
+                this.user = response.data
+              })
+          } else {
+            alert('Erreur veuillez recommencer.')
+          }
+        })
     },
     AddMessage () {
       this.$http.get('users?family.id=' + this.user.family.id, {
@@ -207,7 +232,6 @@ export default {
       })
         .then(response => {
           this.Users = response.data['hydra:member']
-          console.log(this.Users)
           this.$router.push({
             name: 'AddMessage',
             params: {
@@ -219,7 +243,6 @@ export default {
         })
     },
     logOut (event) {
-      this.$session.destroy()
       this.$router.push({
         name: 'login',
         params: {
@@ -233,33 +256,92 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.header{
-  display: flex;
-  margin-top: 1%;
-  border: 1px solid grey;
-  padding: 0.5%;
-}
-.fn_user{
-  margin: 1% 1% 1% 1%;
-}
-.avatar{
-  height: 4%;
-  width: 4%;
-}
-.show{
+.show
+{
   display: flex;
   align-items: center;
   justify-content: space-around;
   margin-top: 3%;
 }
-.todo{
-  border: 2px solid rgba(52, 163, 98);
+.todo
+{
+  border: 1px dashed #779375 ;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 3%;
+}
+.todos
+{
+  border: 2px solid #C5F7C3;
+  padding: 1%;
+  justify-content: center;
+  border-radius: 3%;
+}
+.event
+{
+  border: 1px dashed #6988A0;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 3%;
+}
+.events
+{
+  border: 2px solid #6988A0;
+  padding: 1%;
+  border-radius: 3%;
+}
+.messages
+{
+  border: 2px solid #CFB84E;
+  padding: 1%;
+  border-radius: 4%;
+}
+.message
+{
+  border: 1px dashed #CFB84E;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 3%;
+}
+header{
+  display: flex;
+  flex-direction: column;
+}
+.logo
+{
+  height: 85%;
+  width: 40%;
+}
+.name_appli
+{
+  display: flex;
+  align-items: flex-start;
+  margin-left: 22%;
+}
+.avatar{
+  height: 5%;
+  width: 5%;
+}
+.header1{
+  display: flex;
+  flex-direction: row;
+}
+.header2{
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  border-style: solid;
+  border-color: #C3C5C5;
+  background-color: #C3C5C5;
+  border-radius: 5% 8% 5% 8%;
   padding: 1%;
 }
-.event{
-  border: 2px solid rgba(52, 163, 98);
-  padding: 1%;
-
+.logout{
+  margin-left: 80%;
+  margin-top: 1%;
 }
-
+.fn_user{
+  margin-top: 1%;
+  margin-left: 2%;
+}
 </style>

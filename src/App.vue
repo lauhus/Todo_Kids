@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <header>
-      <img src="./assets/logo_ToDo.png" alt="Logo To Do , Kids">
-      <h1 class="name_appli"> To Do , Kids </h1>
-    </header>
     <main>
       <router-view></router-view>
     </main>
@@ -31,18 +27,16 @@ align-items: flex-start;
 }
 img
 {
-  height: 5%;
-  width: 5%;
+  height: 20%;
+  width: 20%;
 }
 .name_appli
 {
-  margin-left: 40%;
+  margin-left: 20%;
 }
 footer
 {
-  position:absolute;
+  position:fixed;
   bottom:0;
-  width:100%;
-  align-items: center;
 }
 </style>

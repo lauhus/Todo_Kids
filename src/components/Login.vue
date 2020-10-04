@@ -1,5 +1,9 @@
 <template>
   <div>
+    <header>
+      <img src="../assets/logo_ToDo.png" alt="Logo To Do , Kids">
+      <h1 class="name_appli"> To Do , Kids </h1>
+    </header>
     <div>
       <div v-if="message">
         <p> {{message}} </p>
@@ -26,8 +30,6 @@
 <script>
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import VueSession from 'vue-session'
-Vue.use(VueSession)
 Vue.use(VueResource)
 
 export default {
@@ -69,9 +71,8 @@ export default {
                 }
               })
                 .then(response => {
-                  this.$session.start()
                   this.User = response.data['hydra:member'][0]
-                  this.$session.set(['token', this.Token.body['token']], ['user', this.User])
+                  sessionStorage.setItem('user', this.User)
                   this.$router.push({
                     name: 'Home',
                     params: {
@@ -114,6 +115,22 @@ font-family:trebuchet, helvetica, sans-serif;
   align-items:center;
   justify-content:space-around;
   margin-top: 5%;
+}
+img
+{
+  height: 10%;
+  width: 10%;
+}
+.name_appli
+{
+  display: flex;
+  text-align: center;
+  align-items: flex-start;
+  margin-left: 34%;
+}
+header{
+  display: flex;
+  flex-direction: row;
 }
 </style>
 
