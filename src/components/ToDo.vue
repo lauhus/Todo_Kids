@@ -97,6 +97,15 @@ export default {
             })
               .then(response => {
                 this.user = response.data
+                this.$http.get('users?family.id=' + this.user.family.id, {
+                  headers: {
+                    Authorization: 'Bearer ' + this.token,
+                    'Content-Type': 'application/json'
+                  }
+                })
+                  .then(response => {
+                    this.Users = response.data['hydra:member']
+                  })
               })
           } else {
             alert('Erreur veuillez recommencer.')
