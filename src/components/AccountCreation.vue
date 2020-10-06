@@ -11,19 +11,19 @@
         <div class="formAddFamilyandUser">
             <form>
                 <label>Choissisez un pseudo pour votre famille : 
-                    <input type="text" name="pseudo_family" v-model="pseudoFamily"></label><br>
+                    <input type="text" name="pseudo_family" v-model="pseudoFamily" minlength="2" maxlength="20" required></label><br>
                 <hr>
                 <h3> Ajoutez des à présent votre premier parent pour votre Famille </h3>
                 <label> Prénom :
-                    <input type="text" name="firstname" v-model="firstname"> </label><br>
+                    <input type="text" name="firstname" v-model="firstname" required> </label><br>
                 <label> Votre adresse e-mail : (Vous serviras d'identifiant)
-                    <input type="email" name="email" v-model="email"> </label><br>
+                    <input type="email" name="email" v-model="email" required> </label><br>
                 <label> Veuillez confirmer votre e-mail :
-                    <input type="email" name="email_validation" v-model="emailValidation"> </label><br>
+                    <input type="email" name="email_validation" v-model="emailValidation" minlength="8" required> </label><br>
                 <label> Mot de passe : 
-                    <input type="password" name="password" v-model="password"> </label><br>
+                    <input type="password" name="password" v-model="password" minlength="8" required> </label><br>
                 <label> Veuillez confirmer votre mot de passe :
-                    <input type="password" name=passwordValidation v-model="passwordValidation"> </label><br>
+                    <input type="password" name=passwordValidation v-model="passwordValidation" required> </label><br>
                 <label> Choisissez votre avatar : 
                     <div v-for="avatar in avatars" :key="avatar" class="avatar">
                         <button type="button" v-on:click="ValueOfButtonAvatar(avatar)"> <img :src="getAvatar(avatar)" alt="avatar"> </button>

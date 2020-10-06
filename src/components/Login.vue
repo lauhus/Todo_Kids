@@ -12,11 +12,11 @@
       </div>
       <form class="login_form">
         <label>Identifiant : <br>
-          <input v-model="Email" type="text" name="Email" placeholder="email@mail.fr">
+          <input v-model="Email" type="text" name="Email" placeholder="email@mail.fr" required>
         </label>
         <br>
         <label>Mot de passe:<br>
-          <input v-model="Password" type="password" name="Password">
+          <input v-model="Password" type="password" name="Password" required>
         </label>
         <br>
         <button v-on:click="checkForm" type="button" name="submit" class="btn btn-primary">Connectez vous </button>

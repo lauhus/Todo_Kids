@@ -18,19 +18,19 @@
     <div>
         <form class="AddUsers">
             <label> E-mail de l'utilisateur: (chaque utilisateur doit avoir une adresse personnelle)
-                <input type="email" placeholder="email@mail.fr" v-model="email">
+                <input type="email" placeholder="email@mail.fr" v-model="email" required>
             </label>
             <label>
-                <input type="email" placeholder="email@mail.fr" v-model="validation_email">
+                <input type="email" placeholder="email@mail.fr" v-model="validation_email" required>
             </label>
             <label> Mot de passe :
-                <input type="password" v-model="password">
+                <input type="password" v-model="password" minlength="8" required>
             </label>
             <label>Veuillez confirmer le mot de passe :
-                <input type="password" v-model="validation_password">
+                <input type="password" v-model="validation_password" minlength="8" required>
             </label>
             <label>Prénom :
-                <input type="text" v-model="firstname">
+                <input type="text" v-model="firstname" required>
             </label>
             <p> Rôles : </p>
             <label>Parent
